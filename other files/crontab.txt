@@ -1,0 +1,76 @@
+#######################################################
+# crontab
+#######################################################
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+# Hw watchdog
+*/2  *    *   *   *  /tmp/script/resetWD9.sh
+*/10  *    *   *   *  python /home/script/checkDeltaTAD.py >> /usb/logCheckDeltaTAD.txt
+
+# Pi reboot
+1    */6  *   *   *  /home/script/resetTmpRestart.sh
+58   11   *   *   *  /home/script/chkTime.sh setDate > /usb/logChkTime.txt
+0    12   *   *   *  fake-hwclock & nice -n -20 /sbin/shutdown -r 1
+50   11   *   *   *  rm -f /tmp/script/resetWD9.sh
+@reboot              mkdir /tmp/script && cp -rpf /home/script/resetWD9.sh   /tmp/script/
+0    14   *   *   *  cp -rpf /home/script/resetWD9.sh   /tmp/script/
+
+# if after reboot there is more than 1 min take Teltonika time as base time
+15,20,30   12   *   *   *   /home/script/chkTime.sh > /usb/logChkTime.txt
+
+# Teltonika reboot
+58   23   *   *   *   /home/script/cronpinOnOff.sh  >>  /usb/Teltonika_PinOnOff.log
+#58  0    *   *   *   sshpass -p 'Ecml2011' ssh root@192.168.1.1 -o ConnectTimeout=60 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "reboot"
+
+# TAD
+@reboot               sleep 30 && ntpdate -s pool.ntp.org && /home/script/initTAD.sh
+*/3  *    *   *   *   /home/script/initTAD.sh
+*/15 *    *   *   *   /home/script/checkCPUTemp.sh
+
+# backup folder on server
+# 1,58 */1  *   *   *   /home/script/uploadAllData.sh
+# */5  *    *   *   *   /home/script/uploadAllData.sh
+
+# checks
+03   12   *   *   *   sudo service cron restart
+28   */1  *   *   *   /home/script/cronntp.sh
+# 5    */6  *   *   *   /etc/init.d/logmein-hamachi restart
+# 10    */6  *   *   *   hamachi login
+
+# nagios
+#3    */1  *   *   *   /home/script/nagios.sh
+#*/15 *    *   *   *   /home/script/nagios.sh
+
+# remote command launcher
+*/2  *    *   *   *    /home/script/runCommands.sh && /home/script/runCommands.sh
+
+# every day at 1:10 UTC it stores the configuration on the server
+10   1    *   *   *   /home/script/getConfig.sh
+
+# others
+ 5   8    *   *   6   logrotate -f /etc/logrotate.conf
+#5   8    *   *   5   /home/script/cronBK.sh
+ 5   8    *   *   *   /home/script/cleanup.sh >  /usb/Cleanup.log
+
+@hourly  /home/script/consumption.py

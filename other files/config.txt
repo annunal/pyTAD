@@ -1,0 +1,94 @@
+#######################################################
+# config
+#######################################################
+title         = Prigi - Jatim (Indonesia)
+location      = Prigi - Jatim (Indonesia)
+position      = -8.291638 / 111.731428
+IDdevice      = $HOSTNAME
+SaveURL       = http://xxx?idDevice$EQ$IDdevice&log$EQ\$S$IDdevice,$DATE,$TIME,$TEMP,$PRESS,$LEV,$FORE30,$FORE300,$RMS,$ALERT_LEVEL,$ALERT_SIGNAL,$V1,$V2,$V3,\$E
+#SaveURLb      = 
+AlertURL      = http://xxx?idDevice$EQ$IDdevice&AlertLevel$EQ$ALERT_SIGNAL&DateTime$EQ$DATE $TIME&SignalType$EQTAD&AlertType$EQAUTO&Lev$EQ$LEV
+
+******************************************************************************************
+**  Photo shot commands
+******************************************************************************************
+PhotoCMD         = ssh -i /home/pi/.ssh/id_rsa pi@192.168.1.175 /home/script/scatta.sh medium $LEV $ALERT_SIGNAL &
+PhotoTimeInterval=2
+PhotoAlertLevel  =0
+
+******************************************************************************************
+** Alerts parameters
+******************************************************************************************
+*  Alert is issued if Alert Level is larger than this
+AlertLevel        = 2
+
+** Email parameters
+EmailTo       = [list of  emails, comma separated ]
+EmailURL      = http://xxx?sendMail$EQtrue&to$EQ$TO&subj$EQ$SUBJ&fromName$EQJRC-TAD&html$EQtrue&content$EQ$CONTENT
+EmailTemplate     = emailTemplate.txt
+EmailSubject      = emailSubject.txt
+AlertTimeInterval = 5
+
+** SMS parameters
+
+SMSowners     = [list of SMS names]
+SMSlist       = [list of SMS numbers,  comma separated ]
+
+SMSURL        = http://register.gdacs.org/SendCustomSms.aspx?user$EQ$SMSUSER&password$EQ$SMSPWD&numbers$EQ$SMSLIST&message$EQ$MSG
+SMSuser       = *** ASK JRC
+SMSpwd        = *** ask JRC
+SMSTemplate   = SMSTemplate.txt
+
+******************************************************************************************
+**  Periodic messages
+******************************************************************************************
+TemplatePeriodic_SMS_Msg    =SMSperiodic.txt
+
+SMSlistPeriodic             =[list of SMS numbers,  comma separated ]
+SMSowners_ADM               =[list of names]
+SMSlistPeriodic_ADM         =[list of SMS numbers,  comma separated ]
+
+EmailToPeriodic             = [list of emails, comam separated]
+EmailToPeriodic_ADM         = [list of emails comma separated]
+
+TemplatePeriodic_EMAIL_Body =emailTemplatePeriodic.txt
+TemplatePeriodic_EMAIL_Subj =emailSubjectPeriodic.txt
+
+**  4=Wednesday   -1=daily
+Periodic_Day                =4
+Periodic_Day_ADM            =-1
+Periodic_hour               =07:00
+******************************************************************************************
+
+Interval      = 5
+n300          = 2000
+n30           = 200
+threshold     = 0.1
+ratioRMS      = 4
+AddRMS        = 0.1
+backFactor    = 0
+methodInterp  = 1
+servo         = OFF
+
+sensorMultFac = -1
+sensorAddFac  = 6.183
+
+Serial        = /dev/ttyAMA0
+BaudRate      = 9600
+
+batteryPin    = 5
+batteryMultiplier=5.5
+
+panelMultiplier=5.5
+panelPin      = 6
+
+sonarTempPin  = 4
+SonarTempMultiplier =140.
+SonarTempAddConst   =-81.
+SonarMinLevel = 0.5
+SonarMaxLevel = 9.9
+SonarMaxDifference=10.0
+
+SaveAllData = 1
+simSonar      = 0
+voltageInterval = 5

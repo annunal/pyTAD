@@ -1,0 +1,16 @@
+***  EMAIL ALERT FROM TAD_SERVER ***
+
+DeviceID:   $IDdevice
+Location:   $TITLE
+Date:       $DATE $TIME
+Level:      $LEV m
+AlertValue: $ALERT_SIGNAL (0-10)
+
+Show details: http://webcritech.jrc.ec.europa.eu/TAD_server/Device/$IDdevice
+
+======================================================
+ Joint Research Centre - EC - TAD_server
+======================================================
+DISCLAIMER:  JRC nor BMKG are responsible of false or 
+missing alerts from this system. The alert is given
+to raise attention on a level anomaly only.

@@ -1,0 +1,91 @@
+title         = Sadeng Port, Indonesia
+location      = Sadeng Port, Indonesia
+position      = -8.190314/110.799053
+IDdevice      = $HOSTNAME
+
+SaveURL       = https://idsl-test.azurewebsites.net/api/LogManager?idDevice$EQ$IDdevice&log$EQ\$S$IDdevice,$DATE,$TIME,$TEMP,$PRESS,$LEV,$FORE30,$FORE300,$RMS,$ALERT_LEVEL,$ALERT_SIGNAL,$V1,$V2,$V3,\$E
+xxSaveURLb      = http://xxx/SensorGrid/EnterData.aspx?idDevice$EQ$IDdevice&log$EQ\$S$IDdevice,$DATE,$TIME,$TEMP,$PRESS,$LEV,$FORE30,$FORE300,$RMS,$ALERT_LEVEL,$ALERT_SIGNAL,$V1,$V2,$V3,\$E
+AlertURL      = https://idsl-test.azurewebsites.net/api/AlertManager?idDevice$EQ$IDdevice&AlertLevel$EQ$ALERT_SIGNAL&DateTime$EQ$DATE $TIME&SignalType$EQTAD&AlertType$EQAUTO&Lev$EQ$LEV
+******************************************************************************************
+**  Photo shot commands
+******************************************************************************************
+PhotoCMD         = ssh -i /home/pi/.ssh/id_rsa pi@192.168.1.175 /home/script/scatta.sh medium $LEV $ALERT_SIGNAL &
+PhotoTimeInterval=2
+PhotoAlertLevel  =0
+ 
+******************************************************************************************
+** Alerts parameters
+******************************************************************************************
+*  Alert is issued if Alert Level is larger than this
+AlertLevel        = 2
+
+** Email parameters
+EmailTo       = alessandro.annunziato@gmail.com;
+EmailURL      = https://idsl-test.azurewebsites.net/api/MailManager?user=idsl-test&password=idsl-test-pass&sendMail$EQtrue&to$EQ$TO&subj$EQ$SUBJ&fromName$EQJRC-TAD&html$EQtrue&content$EQ$CONTENT
+EmailTemplate     = emailTemplate.txt
+EmailSubject      = emailSubject.txt
+AlertTimeInterval = 5
+
+** SMS parameters
+
+SMSowners     = [Annunziato] , 
+SMSlist       = +393299662159;
+SMSURL        = https://idsl-test.azurewebsites.net/api/SmsManager?user$EQ$SMSUSER&password$EQ$SMSPWD&numbers$EQ$SMSLIST&message$EQ$MSG
+SMSuser       = idsl-test
+SMSpwd        = idsl-test-pass
+SMSTemplate   = SMSTemplate.txt
+
+******************************************************************************************
+**  Periodic messages
+******************************************************************************************
+TemplatePeriodic_SMS_Msg    =SMSperiodic.txt
+
+SMSlistPeriodic             =+393299662159
+SMSowners_ADM               =[Annunziato] 
+SMSlistPeriodic_ADM         =+393480352661;
+
+EmailToPeriodic             = alessandro.annunziato@gmail.com;
+EmailToPeriodic_ADM         = alessandro.annunziato@ec.europa.eu;
+
+TemplatePeriodic_EMAIL_Body =emailTemplatePeriodic.txt
+TemplatePeriodic_EMAIL_Subj =emailSubjectPeriodic.txt
+
+**  4=Wednesday   -1=daily
+Periodic_Day                =4
+Periodic_Day_ADM            =-1
+Periodic_hour               =07:00
+******************************************************************************************
+
+Interval      = 5
+n300          = 300
+n30           = 30
+threshold     = 0.2
+ratioRMS      = 5
+AddRMS        = 0.2
+backFactor    = 0
+methodInterp  = 1
+servo         = OFF
+
+sensorMultFac = -1
+sensorAddFac  = 4.817
+
+Serial        = /dev/ttyAMA0
+BaudRate      = 9600
+
+batteryPin    = 5
+batteryMultiplier=5.5
+
+panelMultiplier=5.5
+panelPin      = 6
+
+sonarTempPin  = 4
+SonarTempMultiplier =140.
+SonarTempAddConst   =-81.
+SonarMinLevel = 0.3
+SonarMaxLevel = 9.8
+SonarMaxDifference=10.2
+
+SaveAllData = 1
+simSonar      = 0
+voltageInterval = 5
+
