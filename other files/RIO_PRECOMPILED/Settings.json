@@ -1,0 +1,142 @@
+{
+  "Id": "IDSL-00",
+  "Features": [
+  {
+      "Enabled": true,
+      "Id": "IDSL",
+      "Type": "Idsl",
+      "Properties": {
+        "Port": "/dev/ttyAMA0",
+        "Output": "9770",
+        "Speed": "9600",
+        "ShortWindow": "30",
+        "LongWindow": "600",
+        "Ratio": "4",
+        "Threshold": "0.05",
+        "Period": "5",
+        "AddRMS": "0.05",
+        "BackFactor": "0",
+        "SensorMultFac": "-1",
+        "SensorAddFac": "6.32",
+        "SonarMinLevel": "0.5",
+        "SonarMaxLevel": "9.9",
+        "SonarMaxDifference": "0.5",
+        "SaveAllData": "AllData_{0:yyyy-MM-dd}.log",
+        "DumpBuffer": "RIO/IDSLbuffer.txt"
+      },
+      "Version": "1.0.2"
+    },
+ {
+  "Enabled": true,
+  "Id": "Battery",
+  "Type": "AnalogMeasure",
+  "Properties": {
+   "Measure": "Voltage",
+   "Frequency": "180",
+   "Channel": "1699C",
+   "Multiplier": "5.5",
+   "Offset": "0"
+  },
+  "Version": "1.1.1"
+},
+{
+  "Enabled": true,
+  "Id": "AirTemperature",
+  "Type": "AnalogMeasure",
+  "Properties": {
+   "Measure": "Celsius",
+   "Frequency": "60",
+   "Channel": "177FC",
+   "Multiplier": "-56",
+   "Offset": "93.65"
+  },
+  "Version": "1.1.1"
+},
+    {
+      "Enabled": true,
+      "Id": "CpuTemperature",
+      "Type": "CpuTemp",
+      "Properties": {
+        "Period": "900",
+        "Scale": "0.001",
+        "Path": "/sys/class/thermal/thermal_zone0/temp"
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default LanRelays",
+      "Type": "LanRelays",
+      "Properties": {
+        "Address": "192.168.1.100",
+        "Port": "6722"
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default TeltonikaManager",
+      "Type": "TeltonikaManager",
+      "Properties": {
+        "PinNumber": "1"
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default MailManager",
+      "Type": "MailManager",
+      "Properties": {
+        "Service": "",
+        "Username": "",
+        "Password": ""
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default SlackManager",
+      "Type": "SlackManager",
+      "Properties": {},
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default SmsManager",
+      "Type": "SmsManager",
+      "Properties": {
+        "Service": null,
+        "Username": "",
+        "Password": ""
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default TeamsManager",
+      "Type": "TeamsManager",
+      "Properties": {
+        "Channel": null
+      },
+      "Version": "1.0.0"
+    },
+    {
+      "Enabled": false,
+      "Id": "default Simulation",
+      "Type": "Simulation",
+      "Properties": {
+        "Name": "Measure",
+        "Frequency": "2",
+        "Average": "0",
+        "Variance": "0"
+      },
+      "Version": "1.0.0"
+    }
+  ],
+  "Queue": "RIO-Article.redis.cache.windows.net:6380,ssl=True,abortConnect=False",
+  "QueueCredentials": "vyk2tKiE79dwxq6TOAF7XeIh8NNPRePRhAzCaGGiFpw=",
+  "WebAccess": "https://idsl-test.azurewebsites.net/api/DataManager",
+  "LocalManagement": true,
+  "EnableRemoteDebug": false,
+  "EnableSlack": false
+}
