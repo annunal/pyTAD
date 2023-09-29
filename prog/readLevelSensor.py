@@ -22,6 +22,15 @@ def init(config, queueData,folderOut, queueMQTT):
   print ("Starting reading sensor")
   print ("opening ", config['Serial'], config['BaudRate'])
   print ("---------------------------------------------------")
+  if 'simSonar' in config:
+    if config['simSonar']=='1':
+        while True:
+           tnow=datetime.now()           
+           measureFloat=3.2
+           queueData.append((tnow,measureFloat))
+          # print(queueData[-1])
+           time.sleep(1)
+
   ser = serial.Serial(config['Serial'], baudrate=config['BaudRate'],
                       parity=serial.PARITY_NONE,
                       stopbits=serial.STOPBITS_ONE,
